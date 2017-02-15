@@ -112,11 +112,11 @@ def fact(f):
 def assoc_legendre(m, l):
     return lambda theta: abs(special.lpmn(m,l,np.cos(theta))[0][m][l])
 
-# 6
-def assoc_laguerre(q, p, x):
-    return special.assoc_laguerre(x, p,q-p)
+# 6 #not working yet
+def assoc_laguerre(p, qmp):
+    return lambda x: special.eval_genlaguerre(qmp, p, x)
     
-print assoc_laguerre(0,0,1)
-print assoc_laguerre(1,1,1)
-print assoc_laguerre(2,2,1)
-print assoc_laguerre(2,2,0)
+print assoc_laguerre(0,0)(1) #1
+print assoc_laguerre(1,1)(1) #2
+print assoc_laguerre(2,2)(1) #60
+print assoc_laguerre(2,2)(0) #144
