@@ -55,6 +55,7 @@ def fact(f):
     
 # 5
 
+# model answer
 #def p00(theta):
 #	return 1
 #
@@ -114,6 +115,8 @@ def assoc_legendre(m, l):
     return lambda theta: abs(special.lpmn(m,l,np.cos(theta))[0][m][l])
 
 # 6
+
+# omdel answer
 #def l00(x):
 #	return 1
 #
@@ -194,7 +197,8 @@ def assoc_legendre(m, l):
 #		return l33
 #	else:
 #		return None
-  
+
+# cheat method, real method is 80+ lines (gasp)
 def assoc_laguerre(p, qmp):
     return lambda x: int(math.factorial(p+qmp)*special.eval_genlaguerre(qmp, p, x))
 
