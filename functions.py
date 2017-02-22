@@ -62,7 +62,3 @@ def fact(f):
         result *= f
         f -= 1
     return result
-
-# cheat answers
-def c_assoc_laguerre(p, qmp):
-    return lambda x: int(math.factorial(p + qmp) * special.eval_genlaguerre(qmp, p, x))

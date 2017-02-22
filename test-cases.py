@@ -7,14 +7,14 @@ Created on Sun Feb  5 11:50:13 2017
 """
 
 # from functions import energy_n, deg_to_rad, rad_to_deg, fact, spherical_to_cartesian, cartesian_to_spherical
-from functions import c_assoc_laguerre
+from laguerre import c_assoc_laguerre
 from legendre import assoc_legendre, c_assoc_legendre, normalized_angular_solution
 from model_answers import assoc_laguerre as m_assoc_laguerre, assoc_legendre as m_assoc_legendre
-import numpy as np
 import sympy as sp
 RED_START = '\33[31m'
 END = '\033[0m'
 print "Associated Legendre: "
+
 s = ""
 for l in range(0, 4):
     for m in range(-l, l + 1):
@@ -34,9 +34,17 @@ for l in range(0, 4):
                     check = 'woo!'
                 s += "%s\t %d\t %s\t" % (m, l, theta)
                 s += "%.3f\t %.3f\t %.3f\t %s\t\n" % (mal, cal, actual, check)
-                s += "legendre differentiation: \t\t\t\t%s\n" % nas[0]
-                s += "associated legendre differentiation: \t%s\n" % nas[1]
-                s += "normalized angular solution: \t\t\t%s\n\n" % nas[2]
+                s += "legendre differentiation: \n"
+                for idx, i in enumerate(nas[0][0]):
+                    # legendre polynomial diffs with l.
+                    s += "differentiation l = #%d %s\n" % (idx, i)
+
+                for idx, i in enumerate(nas[0][1]):
+                    # associated legendre polynomial diffs with m.
+                    s += "differentiation m = #%d %s\n" % (idx, i)
+
+                s += "associated legendre function: \t%s\n" % nas[1]
+                s += "normalized angular solution: \t%s\n\n" % nas[2]
 print s
 
 print "Associated Laguerre: "
