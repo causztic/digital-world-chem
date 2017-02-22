@@ -13,3 +13,4 @@ def laguerre(q):
     l = sp.exp(-x)*x**q
     for i in range(1, q+1):
         l = l.diff(x)
+        
