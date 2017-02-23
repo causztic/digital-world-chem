@@ -58,4 +58,15 @@ def normalized_angular_solution(m, l):
     separation_factor = fact(1 - abs(m)) / float(fact(1 + abs(m)))
     phi = sp.Symbol("phi")
     diffs, diffed_assoc_legendre = assoc_legendre(m, l)
-    return diffs, diffed_assoc_legendre, epsilon * sp.sqrt(pi_part * separation_factor) * sp.exp(1j * m * phi) * diffed_assoc_legendre
+    funct =  epsilon * sp.sqrt(pi_part * separation_factor) * sp.exp(1j * sp.im(m) * sp.im(phi)) * diffed_assoc_legendre
+    return diffs, diffed_assoc_legendre, funct
+
+def angular_wav_func(m, l, theta, phi):
+    nas = normalized_angular_solution(m, l)[2]
+    f = sp.lambdify((sp.Symbol("x"), sp.Symbol("phi"), sp.Symbol("l")), nas)
+    return complex(-1*f(np.cos(theta), phi, l))
+
+# print angular_wav_func(0,0,0,0)
+# print angular_wav_func(0,1,np.pi,0)
+# print angular_wav_func(1,1,np.pi/2,np.pi)
+# print angular_wav_func(0,2,np.pi,0)
