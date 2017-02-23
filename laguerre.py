@@ -12,9 +12,11 @@ def laguerre(q):
     coefficient = sp.exp(x)
     arr = []
     y = sp.exp(-x)*x**q
+    # append the first differential.
     arr.append(y)
     for i in range(1, q+1):
         y = y.diff(x)
+        # for every differential, append it to arr.
         arr.append(y)
     arr.append(coefficient) # append coefficient into list
     return arr, coefficient * y
@@ -33,4 +35,3 @@ def assoc_laguerre(p, qmp):
     function = coefficient * diff
     main_arr.append(arr)
     return main_arr, function
-    
