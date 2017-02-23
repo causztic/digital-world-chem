@@ -1,15 +1,15 @@
 """Laguerre Polynomials"""
 
+from math import factorial
 import sympy as sp
 from sympy.abc import x, a, r, n, l
 import scipy.constants as c
 from scipy import special
-from functions import fact
 
 
 def c_assoc_laguerre(p, qmp):
     """Generates the cheat associated laguerre"""
-    return lambda x: int(fact(p + qmp) * special.eval_genlaguerre(qmp, p, x))
+    return lambda x: int(factorial(p + qmp) * special.eval_genlaguerre(qmp, p, x))
 
 def laguerre(q):
     """Generates and returns the laguerre polynomial with differentials."""
@@ -56,14 +56,16 @@ def normalized_radial_solution(p, qmp):
 
 bohr = c.physical_constants['Bohr radius'][0]
 
-def radial_wav_func(rn, rl, rr):
-    nrs = normalized_radial_solution(rn, rl)[2]
+def radial_wave_func(rn, rl, rr):
+    p = 2*rl+1
+    qmp = rn - rl - 1
+    nrs = normalized_radial_solution(p, qmp)[2]
     f = sp.lambdify((n, l, r, a, x), nrs)
     xx = (2 * rr) / (rn * bohr)
     return round(f(rn, rl, rr, bohr, xx) / (bohr ** (-3.0 / 2)), 5)
 
-# print radial_wav_func(1, 0, bohr) 
-# print radial_wav_func(1, 0, bohr) 
-# print radial_wav_func(2, 1, bohr) 
-# print radial_wav_func(2, 1, bohr*2) 
-# print radial_wav_func(3, 1, bohr*2) 
+# print radial_wave_func(1, 0, bohr)
+# print radial_wave_func(1, 0, bohr)
+# print radial_wave_func(2, 1, bohr)
+# print radial_wave_func(2, 1, bohr*2)
+# print radial_wave_func(3, 1, bohr*2)
