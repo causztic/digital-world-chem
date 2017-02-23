@@ -7,7 +7,7 @@ Created on Sun Feb  5 11:50:13 2017
 """
 
 # from functions import energy_n, deg_to_rad, rad_to_deg, fact, spherical_to_cartesian, cartesian_to_spherical
-from laguerre import c_assoc_laguerre
+from laguerre import c_assoc_laguerre, assoc_laguerre
 from legendre import assoc_legendre, c_assoc_legendre, normalized_angular_solution
 from model_answers import assoc_laguerre as m_assoc_laguerre, assoc_legendre as m_assoc_legendre
 import sympy as sp
@@ -36,8 +36,11 @@ for l in range(0, 4):
                 s += "%.3f\t %.3f\t %.3f\t %s\t\n" % (mal, cal, actual, check)
                 s += "legendre differentiation: \n"
                 for idx, i in enumerate(nas[0][0]):
-                    # legendre polynomial diffs with l.
-                    s += "differentiation l = #%d %s\n" % (idx, i)
+                    if (idx == len(nas[0][0])-1):
+                        s += "Adding in coefficient => %s\n" % i
+                    else:
+                        # legendre polynomial diffs with l.
+                        s += "differentiation l = #%d %s\n" % (idx, i)
 
                 for idx, i in enumerate(nas[0][1]):
                     # associated legendre polynomial diffs with m.
@@ -46,7 +49,7 @@ for l in range(0, 4):
                 s += "associated legendre function: \t%s\n" % nas[1]
                 s += "normalized angular solution: \t%s\n\n" % nas[2]
 print s
-
+s = ""
 print "Associated Laguerre: "
 for p in range(0, 4):
     for qmp in range(0, 4):
@@ -54,8 +57,28 @@ for p in range(0, 4):
             mal = m_assoc_laguerre(p, qmp)
             cal = c_assoc_laguerre(p, qmp)
             if mal != None and cal != None:
-                print "p = %s\t qmp = %s\t x = %s\t %s\t %s" % (p, qmp, x, mal(x), cal(x))
+                s += "%sp qmp x\tmodel\tcheat\t actual\t yay?%s\t\n" % (RED_START, END)
+                mal = mal(x)
+                cal = cal(x)
+                aal = assoc_laguerre(p, qmp)[1]
+                actual = sp.lambdify(sp.Symbol('x'), aal)(x)
+                check = 'boo'
+                if abs(mal - actual) <= 10**-9:
+                    check = 'woo!'
+                s += "%s %d   %s\t" % (p, qmp, x)
+                s += "%i\t%.1f\t%.1f\t %s\t\n" % (mal, cal, actual, check)
+                s += "laguerre differentiation: \n"
+                for idx, i in enumerate(nas[0][0]):
+                    if idx == len(nas[0][0])-1:
+                        s += "Adding in coefficient => %s\n" % i
+                    else:
+                        # laguerre polynomial differentation with q
+                        s += "differentiation l = #%d %s\n" % (idx, i)
 
+                for idx, i in enumerate(nas[0][1]):
+                    # associated laguerre differentation with qmp
+                    s += "differentiation m = #%d %s\n" % (idx, i)
+print s
 # for i in range(1,4):
 #     print 'n =', i
 #     print energy_n(i)

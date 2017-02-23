@@ -10,7 +10,27 @@ def c_assoc_laguerre(p, qmp):
 def laguerre(q):
     """Generates the laguerre polynomial."""
     coefficient = sp.exp(x)
-    l = sp.exp(-x)*x**q
+    arr = []
+    y = sp.exp(-x)*x**q
+    arr.append(y)
     for i in range(1, q+1):
-        l = l.diff(x)
-        
+        y = y.diff(x)
+        arr.append(y)
+    arr.append(coefficient) # append coefficient into list
+    return arr, coefficient * y
+
+def assoc_laguerre(p, qmp):
+    main_arr = []
+    arr = []
+    coefficient = (-1)**p
+    q = p + qmp
+    laguerre_diffs, diff = laguerre(q)
+    main_arr.append(laguerre_diffs)
+    arr.append(diff)
+    for i in range(1, p+1):
+        diff = diff.diff(x)
+        arr.append(diff)
+    function = coefficient * diff
+    main_arr.append(arr)
+    return main_arr, function
+    

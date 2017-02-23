@@ -22,13 +22,14 @@ def legendre(l):
     el = sp.Symbol("l")
     coefficient = 1 / (2 ** el * fact(l))
     arr = []
-    y = coefficient * (ex**2 - 1)**l
+    y = (ex**2 - 1)**l
     arr.append(y)  # add non-differentiated equation
     for i in range(1, l + 1):
         y = y.diff(ex)
         # for every differentiation, append new equation.
         arr.append(y)
-    return arr, y
+    arr.append(coefficient)
+    return arr, coefficient * y
 
 
 def assoc_legendre(m, l):
@@ -39,7 +40,7 @@ def assoc_legendre(m, l):
     m = abs(m)
     legendre_diffs, diff_by_m = legendre(l)
     main_arr.append(legendre_diffs)
-    arr.append(legendre_diffs[-1])
+    arr.append(diff_by_m)
     for i in range(1, m + 1):
         diff_by_m = diff_by_m.diff(ex)
         # append additional differentiations by m per m differentiaion.
