@@ -23,7 +23,7 @@ for l in range(0, 4):
         mal = m_assoc_legendre(m, l)
         cal = c_assoc_legendre(m, l)
         if mal != None and cal != None:
-            s += "%sm\t l\t Θ\tmodel\t cheat\t actual\t yay?%s\t\n" % (RED_START, END)
+            s += "%sm\t l\t t\tmodel\t cheat\t actual\t yay?%s\t\n" % (RED_START, END)
             mal = mal(theta)
             cal = cal(theta)
             aal = assoc_legendre(m, l)[1]
