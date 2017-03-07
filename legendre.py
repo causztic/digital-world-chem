@@ -55,7 +55,7 @@ def normalized_angular_solution(m, l):
     """Returns a normalized angular solution for the associated m and l numbers for an orbital."""
     epsilon = -1 ** m if (m >= 0) else 1
     pi_part = ((2 * l) + 1) / (4 * sp.pi)
-    separation_factor = factorial(1 - abs(m)) / float(factorial(1 + abs(m)))
+    separation_factor = factorial(l - abs(m)) / float(factorial(l + abs(m)))
     phi = sp.Symbol("phi")
     diffs, diffed_assoc_legendre = assoc_legendre(m, l)
     funct =  epsilon * sp.sqrt(pi_part * separation_factor) * sp.exp(1j * sp.im(m) * sp.im(phi)) * diffed_assoc_legendre
