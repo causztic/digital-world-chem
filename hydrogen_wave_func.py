@@ -1,9 +1,32 @@
+import math
 import numpy
-from laguerre import normalized_radial_solution
-from legendre import normalized_angular_solution
+import scipy.constants as c
+from functions import cartesian_to_spherical
+from laguerre import normalized_radial_solution, radial_wave_func
+from legendre import normalized_angular_solution, angular_wave_func
 
 def hydrogen_wave_func(n, l, m, roa, nx, ny, nz):
-    xx, yy, zz = numpy.meshgrid(nx, ny, nz)
-    normalized_angular_solution(m,l)
+    roa = float(roa)
+    xx, yy, zz = numpy.meshgrid(numpy.linspace(-roa, roa, nx),
+                                numpy.linspace(-roa, roa, ny), numpy.linspace(-roa, roa, nz))
 
-hydrogen_wave_func(2,1,1,8,2,2,2)
+    vector_r = numpy.vectorize(cartesian_to_spherical)
+    v_angularwf = numpy.vectorize(angular_wave_func)
+    v_radialwf = numpy.vectorize(radial_wave_func)
+
+    bohr_radius = c.physical_constants['Bohr radius'][0]
+    r, theta, phi = vector_r(xx, yy, zz)
+    r = r * bohr_radius
+
+    radial_part = v_radialwf(n, l, r)
+    angular_part = v_angularwf(m, l, theta, phi)
+
+    rwf = (radial_part * angular_part) ** 2
+    mag = numpy.absolute(rwf)
+
+    return numpy.round(xx,5), numpy.round(yy,5), numpy.round(zz,5), numpy.round(mag,5)
+
+for [n, l, m, roa, nx, ny, nz] in [[2, 1, 1, 8, 2, 2, 2], [2, 1, 1, 5, 3, 4, 2], [2, 0, 0, 3, 5, 4, 3]]:
+    x, y, z, mag = hydrogen_wave_func(n, l, m, roa, nx, ny, nz)
+    print 'mag:'
+    print mag
