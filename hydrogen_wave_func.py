@@ -25,8 +25,3 @@ def hydrogen_wave_func(n, l, m, roa, nx, ny, nz):
     mag = numpy.absolute(rwf)
 
     return numpy.round(xx,5), numpy.round(yy,5), numpy.round(zz,5), numpy.round(mag,5)
-
-for [n, l, m, roa, nx, ny, nz] in [[2, 1, 1, 8, 2, 2, 2], [2, 1, 1, 5, 3, 4, 2], [2, 0, 0, 3, 5, 4, 3]]:
-    x, y, z, mag = hydrogen_wave_func(n, l, m, roa, nx, ny, nz)
-    print 'mag:'
-    print mag
