@@ -3,12 +3,12 @@ from hydrogen_wave_func import hydrogen_wave_func
 from mayavi import mlab
 
 print "starting.."
-for n in range(1, 5):
+for n in [4]:
     for l in range(0, n):
-        for m in range(-l, l+1):
+        for m in range(0, l+1):
             print "n = %d, l = %d, m = %d" % (n, l, m)
-            x,y,z,density = hydrogen_wave_func(n, l, m,10,2,2,2)
-
+            x,y,z,density = hydrogen_wave_func(n, l, m,10,20,20,20)
+            print x,y,z,density
             density.dump('density.dat')
             density = np.load('density.dat')
 
@@ -17,5 +17,5 @@ for n in range(1, 5):
             pts = mlab.points3d(mag, opacity=0.5, transparent=True)
             mlab.colorbar(orientation='vertical')
             mlab.axes()
-            mlab.savefig("%s_%s_%s" % (n,l,m))
+            mlab.savefig("images/%s_%s_%s.png" % (n,l,m))
             mlab.close()
